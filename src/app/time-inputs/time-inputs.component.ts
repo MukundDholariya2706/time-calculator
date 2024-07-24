@@ -42,17 +42,6 @@ export class TimeInputsComponent implements OnInit {
     this.calculateDifference();
   }
 
-  setCurrentTime(index: number, controlName: 'start' | 'end') {
-    const now = new Date();
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const currentTime = `${hours}:${minutes}`;
-
-    const timeGroup = this.times.at(index) as FormGroup;
-    timeGroup.get(controlName)?.setValue(currentTime);
-    this.calculateDifference();
-  }
-
   calculateDifference() {
     let totalMinutes = 0;
     this.times.controls.forEach(group => {

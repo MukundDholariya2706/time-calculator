@@ -2,16 +2,12 @@
   <div formArrayName="times">
     <div *ngFor="let time of times.controls; let i = index" [formGroupName]="i">
       <label>Start Time:</label>
-      <input type="time" formControlName="start">
-      <button type="button" (click)="setCurrentTime(i, 'start')">Set Start Time to Now</button>
-      
+      <input type="time" formControlName="start" (change)="calculateDifference()">
       <label>End Time:</label>
-      <input type="time" formControlName="end">
-      <button type="button" (click)="setCurrentTime(i, 'end')">Set End Time to Now</button>
-      
+      <input type="time" formControlName="end" (change)="calculateDifference()">
       <button type="button" (click)="removeTime(i)">Remove</button>
-      <div *ngIf="time.get('difference')?.['value']">
-        <strong>Difference:</strong> {{ time.get('difference')?.['value'].hours }} hours {{ time.get('difference')?.['value'].minutes }} minutes
+      <div *ngIf="time.get('difference')?.value">
+        <strong>Difference:</strong> {{ time.get('difference')?.value?.hours }} hours {{ time.get('difference')?.value?.minutes }} minutes
       </div>
     </div>
   </div>
@@ -19,7 +15,7 @@
 </form>
 
 <div>
-  <h3>Total Difference: {{ totalDifference.hours }} hours {{ totalDifference.minutes }} minutes</h3>
+  <h3>Working Hour: {{ totalDifference.hours }} hours {{ totalDifference.minutes }} minutes</h3>
 </div>
 
 <div>
