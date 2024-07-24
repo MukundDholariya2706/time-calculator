@@ -1,25 +1,28 @@
 <form [formGroup]="timeForm">
-    <div formArrayName="times">
-      <div *ngFor="let time of times.controls; let i = index" [formGroupName]="i">
-        <label>Start Time:</label>
-        <input type="time" formControlName="start" (change)="calculateDifference()">
-        <label>End Time:</label>
-        <input type="time" formControlName="end" (change)="calculateDifference()">
-        <button type="button" (click)="removeTime(i)">Remove</button>
-        <div *ngIf="time.get('difference')?.value">
-          <strong>Difference:</strong> {{ time.get('difference')?.value?.hours }} hours {{ time.get('difference')?.value?.minutes }} minutes
-        </div>
+  <div formArrayName="times">
+    <div *ngFor="let time of times.controls; let i = index" [formGroupName]="i">
+      <label>Start Time:</label>
+      <input type="time" formControlName="start">
+      <button type="button" (click)="setCurrentTime(i, 'start')">Set Start Time to Now</button>
+      
+      <label>End Time:</label>
+      <input type="time" formControlName="end">
+      <button type="button" (click)="setCurrentTime(i, 'end')">Set End Time to Now</button>
+      
+      <button type="button" (click)="removeTime(i)">Remove</button>
+      <div *ngIf="time.get('difference')?.['value']">
+        <strong>Difference:</strong> {{ time.get('difference')?.['value'].hours }} hours {{ time.get('difference')?.['value'].minutes }} minutes
       </div>
     </div>
-    <button type="button" (click)="addTime()">Add Time</button>
-  </form>
-  
-  <div>
-    <h3>Working Hour: {{ totalDifference.hours }} hours {{ totalDifference.minutes }} minutes</h3>
   </div>
-  
-  <div>
-    <h3>Form Value:</h3>
-    <pre>{{ timeForm.value | json }}</pre>
-  </div>
-  
+  <button type="button" (click)="addTime()">Add Time</button>
+</form>
+
+<div>
+  <h3>Total Difference: {{ totalDifference.hours }} hours {{ totalDifference.minutes }} minutes</h3>
+</div>
+
+<div>
+  <h3>Form Value:</h3>
+  <pre>{{ timeForm.value | json }}</pre>
+</div>
